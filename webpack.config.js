@@ -21,7 +21,9 @@ module.exports = {
                 publicPath: "/build",
             }
         ],
-        port: 8080,
+        proxy: {
+            '/api' : 'http://localhost:3000',
+        },
     },
     module: {
         rules: [
@@ -40,5 +42,8 @@ module.exports = {
                 use: ["style-loader", "css-loader"]
             }
         ]
+    },
+    resolve: {
+        extensions: ['.js', '.jsx']
     }
 }
