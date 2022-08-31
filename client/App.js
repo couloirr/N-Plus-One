@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import MainContainer from "./containers/Maincontainer";
+import MainContainer from "./containers/MainContainer";
 // import { render } from "react-dom";
 
 
@@ -7,9 +7,7 @@ class App extends Component {
     render(){
         return(
             <div className="App">
-                <h2>App Component Loaded</h2>
                 <MainContainer />
-           
             </div>
         )
     }

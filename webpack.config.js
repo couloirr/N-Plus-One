@@ -40,7 +40,20 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: ["style-loader", "css-loader"]
-            }
+            },
+            {
+                test: /\.(png|svg|jpg|jpeg|gif)$/,
+                use: [
+                    {
+                        loader: "file-loader",
+                        options: {
+                            name: '[name].[ext]',
+                            outputPath: 'assets'
+                        }
+                    }
+                ],
+                
+            },
         ]
     },
     resolve: {

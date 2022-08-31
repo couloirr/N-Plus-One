@@ -8,7 +8,6 @@ class MainContainer extends Component {
     render() {
         return (
             <div id='mainContainer'>
-            <h2>Main Container Component</h2>
             <RepairContainer />
             <StatsContainer />
         </div>
