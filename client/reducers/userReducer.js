@@ -7,7 +7,7 @@ const initialState = {
     totalElevation: 0,
     recentHours: 0,
     totalHours: 0,
-    bikeComponent: [],
+    bikeComponents: [],
 };
 
 
@@ -15,12 +15,11 @@ const userReducer = (state = initialState, action) => {
 
     switch (action.type) {
         case types.GET_USER:{
-            return {
-                ...state,
-                ...action.payload
-            }
-                
-        } 
+            return  action.payload
+        }
+        case types.NEW_RIDE:{
+            return  action.payload
+        }
         default: {
             return state;
         }

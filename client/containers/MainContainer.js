@@ -7,27 +7,24 @@ import StatsContainer from './StatsContainer';
 
 
 
-class MainContainer extends Component { 
-    // componentDidMount(){
-    //     this.props.getUser()
-    // }
-    render() {
-        const {user} = this.props
-        // console.log(user.bikes)
-        // if(!user.loading ) {
-        //     const currentBike = user.user[0].bikes[0]
-        //     console.log(currentBike)
-        // }
-        // console.log(currentBike)
+const MainContainer = (props) => { 
+    const {bikeName, bikeComponents, totalMiles, totalElevation, recentHours, totalHours} = useSelector((state) => state.user);
+    // console.log(bikeName)
         return (
             <div id='mainContainer'>
             <RepairContainer
-            bike={this.props.currentBike}
+            bikeName={bikeName}
+            components={bikeComponents}
              />
-            <StatsContainer />
+            <StatsContainer 
+            totalMiles={totalMiles}
+            totalElevation={totalElevation}
+            totalHours={totalHours}
+
+            />
         </div>
         )
-    }
+    
 
 
 }

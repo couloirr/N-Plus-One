@@ -1,24 +1,35 @@
 import React, {Component} from "react";
 import BikeComponent from "../components/BikeComponent";
 
-class BikeComponentContainer extends Component{
-    render() {
+const BikeComponentContainer = ({components})=> {
+    const compArr = [];
+    // console.log(components)
+    if(components.length > 0){
+        components.forEach((element, i) => {
+            compArr.push(
+                <BikeComponent
+                key={i}
+                part={element}
+                 />
+            );
+        });
+    }
+    
         return(
-            <div><h4>Components Container</h4>
+            
             <div className="container" id="comp-container">
-                <BikeComponent />
-                <BikeComponent />
-                <BikeComponent />
-                <BikeComponent />
+               {compArr}
                 <form>
+                        <div>
                         <input />
-                        <button type='submit'>Add Component</button>
+                        <button type='submit'></button>
+                        </div>
              
                 </form>
-                </div>
+                
             </div>
         )
-    }
+    
 
 }
 

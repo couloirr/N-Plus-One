@@ -1,21 +1,27 @@
 import React, {Component} from "react";
+import { useDispatch } from "react-redux";
 
-class BikeComponent extends Component{
-    render() {
+const BikeComponent = (props)=> {
+  const {componentName, currentHours, serviceInterval, _id} = props.part;
+  const dispatch = useDispatch;
+  const handleRepair = e => {
+//    dispatch(saveNewRepair)
+  }
+//  console.log(_id)
         return(
             <div className="component">
-                <span><h4>percent:</h4></span>
-                <span><h4>icon:</h4></span>
-                <span><h4>name:</h4></span>
-                <span><h4>hours remaining:</h4></span>
+                <h4>{`name: ${componentName}`}</h4>
+                <h4>{`percent: ${((serviceInterval - currentHours)/serviceInterval * 100)}%`}</h4>
+                
+                <h4>{`hours remaining ${serviceInterval - currentHours}`}</h4>
                 <form>
                         
-                        <button type='submit'>Edit</button>
+                <button type='submit'></button>
                 </form>
             </div>
         )
     }
 
-}
+
 
 export default BikeComponent;

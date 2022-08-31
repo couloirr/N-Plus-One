@@ -2,20 +2,20 @@ const models = require('../models/userModel');
 
 const userController = {};
 
-userController.getUser = (req,res,next) => {
-    const id = 2;
-    models.User.findOne({id}).exec()
-    .then(userDocs => {
-        res.locals.user = userDocs;
-        return next();
-    })
-    .catch(err => {
-        return next({
-            log: `userController.getUsers: ERROR:${err} `,
-            message: {err: 'Error occured in user controller get user'}
-        })
-    })
-};
+// userController.getUser = (req,res,next) => {
+//     const id = 2;
+//     models.User.findOne({id}).exec()
+//     .then(userDocs => {
+//         res.locals.user = userDocs;
+//         return next();
+//     })
+//     .catch(err => {
+//         return next({
+//             log: `userController.getUsers: ERROR:${err} `,
+//             message: {err: 'Error occured in user controller get user'}
+//         })
+//     })
+// };
 
 userController.createUser = (req,res,next) => {
     const id = 3,
@@ -124,6 +124,44 @@ userController.getUser = async (req, res, next) => {
 
     return next()
 
+}
+
+userController.newRide = async (req,res,next) => {
+    const userId = res.locals.user
+    const currentUser = await models.User.findById(userId)
+    const currentBike = currentUser.bikes[0]
+
+    const parsedData = [];
+    
+    for(const key in req.body){
+        parsedData.push(key)
+    }
+    const useableData = JSON.parse(parsedData[0])
+
+
+   
+
+    const miles = Number(useableData.miles);
+    const hours = Number(useableData.hours);
+    const elevation = Number(useableData.elevation);
+
+    
+    const componentsArr = currentBike.bikeComponents;
+    // console.log(componentsArr)
+    componentsArr.forEach(element => {
+        element.currentHours += hours;
+    });
+   
+    
+
+    currentBike.totalMiles += miles;
+    currentBike.totalElevation += elevation;
+    currentBike.totalHours += hours;
+
+    const updated = await currentUser.save()
+    
+    res.locals.user = updated;
+    return next()
 }
 
 

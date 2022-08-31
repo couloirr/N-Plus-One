@@ -1,16 +1,17 @@
 import React, {Component} from "react";
 
-class BikeStats extends Component{
-    render() {
+const BikeStats =(props)=> {
+    const {totalMiles, totalElevation, totalHours} = props.props
+        console.log(totalMiles)
         return(
             <div className="stats">
-                <h2>Bike Stats</h2>
-                <span><h4>Total Miles:</h4></span>
-                <span><h4>Total Elevation:</h4></span>
-                <span><h4>Total Hours</h4></span>
+                <h2></h2>
+                <span><h4>{`Total Miles:${totalMiles}`}</h4></span>
+                <span><h4>{`Total Elevation:${totalElevation}ft`}</h4></span>
+                <span><h4>{`Total Hours:${totalHours}`}</h4></span>
             </div>
         )
-    }
+    
 
 }
 

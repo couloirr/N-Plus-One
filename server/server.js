@@ -17,6 +17,7 @@ app.use(express.json());
 // app.use(express.urlencoded())
 app.use('/build', express.static(path.join(__dirname, '../build')));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded())
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     next();
@@ -44,6 +45,13 @@ app.get('/newbike', (req, res)=>{
 
 app.get('/api/signin',userController.getUser, (req,res)=>{
     res.status(200).json(res.locals.user)
+})
+app.post('/api/newRide', userController.verifyUser,userController.newRide, (req,res)=>{
+    res.status(200).json(res.locals.user)
+})
+
+app.get('/api',(req, res)=> {
+    res.send('getting api')
 })
 
 

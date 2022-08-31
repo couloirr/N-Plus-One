@@ -32,9 +32,11 @@ import { useSelector } from 'react-redux';
 
 // }
 
-const RepairContainer = (props) => {
-    const {bikeName} = useSelector((state) => state.user);
-    console.log(bikeName)
+const RepairContainer = ({
+    bikeName,
+    components
+}) => {
+
     return(
               <div>
                 <div className='title'><h2 id='bike-name'>{bikeName}</h2>
@@ -43,12 +45,14 @@ const RepairContainer = (props) => {
                 </div>
                 <form>
                         <input />
-                        <button type='submit'>Add Bike</button>
+                        <button type='submit'></button>
                 </form>
                 
                 <div className='container' id='repair-container'>
                 <h4 className='container'>Pic Placeholder</h4>
-                <BikeComponentContainer />
+                <BikeComponentContainer 
+                components={components}
+                />
                 </div>
             </div>  
     )
