@@ -116,5 +116,16 @@ userController.verifyUser = async (req, res, next) =>{
 
 }
 
+userController.getUser = async (req, res, next) => {
+    const username = 'admin';
+    const currentUser = await models.User.findOne({username:username});
+
+    res.locals.user = currentUser;
+
+    return next()
+
+}
+
+
 
 module.exports = userController;
