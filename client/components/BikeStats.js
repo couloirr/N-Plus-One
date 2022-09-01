@@ -17,7 +17,7 @@ const BikeStats =(props)=> {
       };
         return(
             <div className="stats">
-                <h2></h2>
+                <h2>Bike Stats</h2>
                 <span><h4>{`Total Miles:${totalMiles}`}</h4></span>
                 <span><h4>{`Total Elevation:${totalElevation}ft`}</h4></span>
                 <span><h4>{`Total Hours:${totalHours}`}</h4></span>

@@ -28,7 +28,7 @@ const percentage = (currentHours, serviceInterval) => {
                 <h4>{`Hours Until Service: ${serviceInterval - currentHours > 0 ? serviceInterval - currentHours :0 }`}</h4>
                 <form onSubmit={onSubmit}> 
                         
-                <button id={_id} name="edit" type='submit'>Complete Repair</button>
+                <button id={_id} name="edit" type='submit' className="repair_button">Complete Repair</button>
                 </form>
             </div>
         )

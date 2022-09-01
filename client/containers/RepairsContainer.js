@@ -13,15 +13,10 @@ const RepairContainer = ({
 }) => {
 
     return(
-              <div>
-                <div className='title'><h2 id='bike-name'>{bikeName}</h2>
-                    
-                
-                </div>
-
-                
+              <div className='title'>
+                <h2 id='title'>{bikeName}</h2>
                 <div className='container' id='repair-container'>
-                <img src={img} height={`500px`}></img>
+                <img src={img}></img>
                 <BikeComponentContainer 
                 components={components}
                 />
