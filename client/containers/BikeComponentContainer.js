@@ -18,15 +18,7 @@ const BikeComponentContainer = ({components})=> {
         return(
             
             <div className="container" id="comp-container">
-               {compArr}
-                <form>
-                        <div>
-                        <input />
-                        <button type='submit'></button>
-                        </div>
-             
-                </form>
-                
+               {compArr} 
             </div>
         )
     

@@ -76,10 +76,10 @@ userController.createComponent = async (req, res, next) => {
     // console.log('current bike', currentBike);
 
     const parts = [
-        {componentName: 'fork', currentHours: 0, serviceInterval: 20},
-        {componentName: 'rear shock', currentHours: 0, serviceInterval: 20},
-        {componentName: 'Drive Train', currentHours: 0, serviceInterval: 20},
-        {componentName: 'Brakes', currentHours: 0, serviceInterval: 20},
+        {componentName: 'fork', currentHours: 0, serviceInterval: 200},
+        {componentName: 'rear shock', currentHours: 0, serviceInterval: 100},
+        {componentName: 'Drive Train', currentHours: 0, serviceInterval: 500},
+        {componentName: 'Brakes', currentHours: 0, serviceInterval: 400},
 
     ]
 
@@ -164,6 +164,19 @@ userController.newRide = async (req,res,next) => {
     return next()
 }
 
+userController.updateComponent = async (req,res,next) =>{
+    const userId = res.locals.user
+    const currentUser = await models.User.findById(userId)
+    const currentBike = currentUser.bikes[0]
+    const partId = Object.keys(req.body)[0]
+    const currentComponent = currentBike.bikeComponents.id(partId)
+    console.log(currentComponent)
 
+    currentComponent.currentHours = 0;
+    const updated = await currentUser.save();
+    res.locals.user = updated
+    // console.log(currentUser)
+    return next()
 
+}
 module.exports = userController;

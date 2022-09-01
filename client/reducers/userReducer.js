@@ -20,6 +20,9 @@ const userReducer = (state = initialState, action) => {
         case types.NEW_RIDE:{
             return  action.payload
         }
+        case types.NEW_REPAIR:{
+            return action.payload
+        }
         default: {
             return state;
         }

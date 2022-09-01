@@ -1,4 +1,4 @@
-import { GET_USER, USERS_ERROR, NEW_RIDE } from "../constants/actionTypes";
+import { GET_USER, USERS_ERROR, NEW_RIDE, NEW_REPAIR } from "../constants/actionTypes";
 import axios from 'axios';
 
 
@@ -10,6 +10,7 @@ export async function getUser(dispatch) {
 }
 
 export function saveNewRide(miles,hours,elevation,currentBike){
+    
     const reqObj = {
         miles: miles,
         hours: hours,
@@ -23,7 +24,15 @@ export function saveNewRide(miles,hours,elevation,currentBike){
     }
 }
 
-// export const handleSubmit = event => () => {
-//     event.preventDefault();
-//     console.log('in handle submit')
-// }
+export function newRepair(id){
+
+    const partId = {id:id};
+    const jsonPart = JSON.stringify(partId)
+
+    return async function saveNewRepairThunk(dispatch, getState){
+        const response = await axios.post('http://localhost:3000/api/newrepair',id)
+        dispatch({type: 'NEW_REPAIR', payload: response.data.bikes[0]})
+    }
+
+
+}

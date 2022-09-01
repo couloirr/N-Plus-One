@@ -5,6 +5,7 @@ const port = 3000;
 const mongoose = require('mongoose');
 const userController = require('./controllers/userController');
 const bodyParser = require('body-parser')
+const stravaController = require("./controllers/strava");
 
 
 // const MONGO_URI =   'mongodb+srv://acseery:XbVDf89kiMilgn1b@cluster0.emg5bja.mongodb.net/?retryWrites=true&w=majority';
@@ -49,12 +50,17 @@ app.get('/api/signin',userController.getUser, (req,res)=>{
 app.post('/api/newRide', userController.verifyUser,userController.newRide, (req,res)=>{
     res.status(200).json(res.locals.user)
 })
+app.post('/api/newrepair', userController.verifyUser,userController.updateComponent, (req,res)=>{
+    res.status(200).json(res.locals.user)
+})
 
 app.get('/api',(req, res)=> {
     res.send('getting api')
 })
 
-
+app.get('/strava', stravaController.fetch, (req,res)=>{
+    res.status(200).json(res.locals.data);
+})
 
 
 
