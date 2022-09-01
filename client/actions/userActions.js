@@ -1,5 +1,6 @@
-import { GET_USER, USERS_ERROR, NEW_RIDE, NEW_REPAIR } from "../constants/actionTypes";
+import { GET_USER, USERS_ERROR, NEW_RIDE, NEW_REPAIR,GET_STRAVA } from "../constants/actionTypes";
 import axios from 'axios';
+import { useSelector } from "react-redux";
 
 
 
@@ -8,9 +9,15 @@ export async function getUser(dispatch) {
     // console.log(response.data.bikes[0].bikeComponents)
     dispatch({type: 'GET_USER', payload: response.data.bikes[0]})
 }
+export async function getStrava(dispatch) {
+    console.log('in getStrava')
+    const response = await axios.get('http://localhost:3000/api/strava')
+    console.log(response.data.bikes[0])
+    dispatch({type: 'GET_STRAVA', payload: response.data.bikes[0]})
+}
 
 export function saveNewRide(miles,hours,elevation,currentBike){
-    
+    const recentRidesArr = useSelector(state)
     const reqObj = {
         miles: miles,
         hours: hours,

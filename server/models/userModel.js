@@ -26,7 +26,8 @@ const bikeSchema = new Schema({
     totalElevation: Number,
     recentHours: Number,
     totalHours: Number,
-    bikeComponents: [componentSchema]
+    bikeComponents: [componentSchema],
+    recentRides: [{}]
 })
 
 const Bike = mongoose.model('bike', bikeSchema);
@@ -37,7 +38,6 @@ const userSchema = new Schema({
     password: String,
     lastSignIn: Number,
     bikes: [bikeSchema],
-    // bikes: [{type: Schema.Types.ObjectId, ref: 'bike'}]
 })
 
 const User = mongoose.model('user', userSchema);

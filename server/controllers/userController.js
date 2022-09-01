@@ -76,8 +76,8 @@ userController.createComponent = async (req, res, next) => {
     // console.log('current bike', currentBike);
 
     const parts = [
-        {componentName: 'fork', currentHours: 0, serviceInterval: 200},
-        {componentName: 'rear shock', currentHours: 0, serviceInterval: 100},
+        {componentName: 'Fork', currentHours: 0, serviceInterval: 200},
+        {componentName: 'Rear Shock', currentHours: 0, serviceInterval: 100},
         {componentName: 'Drive Train', currentHours: 0, serviceInterval: 500},
         {componentName: 'Brakes', currentHours: 0, serviceInterval: 400},
 

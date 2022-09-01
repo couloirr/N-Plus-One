@@ -58,8 +58,8 @@ app.get('/api',(req, res)=> {
     res.send('getting api')
 })
 
-app.get('/strava', stravaController.fetch, (req,res)=>{
-    res.status(200).json(res.locals.data);
+app.get('/api/strava', stravaController.fetch,stravaController.parseData,stravaController.addData, (req,res)=>{
+    res.status(200).json(res.locals.user);
 })
 
 

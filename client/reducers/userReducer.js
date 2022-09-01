@@ -17,6 +17,9 @@ const userReducer = (state = initialState, action) => {
         case types.GET_USER:{
             return  action.payload
         }
+        case types.GET_STRAVA:{
+            return  action.payload
+        }
         case types.NEW_RIDE:{
             return  action.payload
         }

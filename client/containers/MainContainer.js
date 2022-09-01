@@ -8,7 +8,7 @@ import StatsContainer from './StatsContainer';
 
 
 const MainContainer = (props) => { 
-    const {bikeName, bikeComponents, totalMiles, totalElevation, recentHours, totalHours} = useSelector((state) => state.user);
+    const {bikeName, bikeComponents, totalMiles, totalElevation, recentRides, totalHours} = useSelector((state) => state.user);
     // console.log(bikeName)
         return (
             <div id='mainContainer'>
@@ -20,6 +20,7 @@ const MainContainer = (props) => {
             totalMiles={totalMiles}
             totalElevation={totalElevation}
             totalHours={totalHours}
+            recentRides={recentRides}
 
             />
         </div>

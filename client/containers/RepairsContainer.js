@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import BikeComponentContainer from './BikeComponentContainer';
 import { useSelector } from 'react-redux';
 // import path 
-// import img from '../assets'
+import img from '../assets/bikepic.png'
 
 
 
@@ -21,7 +21,7 @@ const RepairContainer = ({
 
                 
                 <div className='container' id='repair-container'>
-                <h4 className='container'>Pic Placeholder</h4>
+                <img src={img} height={`500px`}></img>
                 <BikeComponentContainer 
                 components={components}
                 />

@@ -4,11 +4,31 @@ import { saveNewRide } from "../actions/userActions";
 import { useRef } from "react";
 // import { handleSubmit } from "../actions/userActions";
 import { useForm } from "react-hook-form"
+import { useSelector } from "react-redux";
+import Ride from "./ride"
 
 
 
 
-const RideStats =()=>{
+const RideStats =({rides})=>{
+  // const recentRidesArr = useSelector((state) => state.user.recentRides)
+  const rideComps = [];
+
+  console.log(rides)
+  if(rides){
+    rides.forEach(element => {
+      rideComps.push(
+        <Ride
+        rideName={element.name}
+        rideDistance={element.distance}
+        rideTime={element.moving_time}
+        rideElevation={element.total_elevation_gain}
+        />
+      )
+    });
+  }
+
+
     const dispatch = useDispatch()
     const onSubmit = (e) => {
         
@@ -24,14 +44,19 @@ const RideStats =()=>{
       };
     
       return (
+       
         <div>
+          <h3>Recent Rides</h3>
+           <div>{rideComps}</div>
           <form onSubmit={onSubmit}>
+            <h3>Add New Ride</h3>
             <input
             type="text"
             name="total_miles"
             id="miles"
             placeholder="Total Miles"
             />
+          
             <input
             type="text"
             name="total_hours"
@@ -44,6 +69,7 @@ const RideStats =()=>{
             id="elevation"
             placeholder="Total Elevation"
             />
+            
             <button type="submit">submit</button>
           </form>
         </div>
