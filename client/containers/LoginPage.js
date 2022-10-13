@@ -1,10 +1,11 @@
 import React from 'react';
 import { useAuth } from '../hooks/useAuth';
 export const LoginPage = () => {
-  const { login } = useAuth();
-  function handleSubmit(e) {
+  // const { login } = useAuth();
+  async function handleSubmit(e) {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
+    const res = await fetch('auth/strava');
     // login({
     //   email: data.get('email'),
     //   password: data.get('password'),
@@ -17,6 +18,9 @@ export const LoginPage = () => {
         <input type="text" name="username" placeholder="Password"></input>
         <button type="submit">Login</button>
         <button>Signup</button>
+      </form>
+      <form action="http://localhost:3000/auth/strava" method="get">
+        <input type="submit" value="Login Auth"></input>
       </form>
     </div>
   );
