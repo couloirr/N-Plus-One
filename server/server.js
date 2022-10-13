@@ -6,6 +6,8 @@ const mongoose = require('mongoose');
 const userController = require('./controllers/userController');
 const bodyParser = require('body-parser');
 const stravaController = require('./controllers/strava');
+const authRouter = require('./routes/authRoute');
+require('dotenv').config();
 
 // const MONGO_URI =   'mongodb+srv://acseery:XbVDf89kiMilgn1b@cluster0.emg5bja.mongodb.net/?retryWrites=true&w=majority';
 const MONGO_URI = 'mongodb://localhost/Users';
@@ -21,6 +23,7 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   next();
 });
+app.use('/auth/strava', authRouter);
 // app.use(bodyParser.urlencoded({extended: true}))
 
 // app.get('/', (req,res)=>{
@@ -98,5 +101,5 @@ app.use((err, req, res, next) => {
 });
 
 module.exports = app.listen(port, () =>
-  console.log(`Listening on port ${port}`)
+  console.log(`Listening on port ${port}`, process.env.STRAVA_CLIENT_ID)
 );
