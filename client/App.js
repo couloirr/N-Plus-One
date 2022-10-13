@@ -1,22 +1,14 @@
-import React, {Component} from "react";
-import MainContainer from "./containers/MainContainer";
-// import { render } from "react-dom";
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import MainContainer from './containers/MainContainer';
+import { LoginPage } from './containers/LoginPage';
+import './css/app.css';
 
-
-class App extends Component {
-    render(){
-        return(
-            <div className="App">
-                <MainContainer />
-            </div>
-        )
-    }
+export default function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<MainContainer />} />
+      <Route path="/login" element={<LoginPage />} />
+    </Routes>
+  );
 }
-
-// const App = () => {
-//     <div id="App">
-//         < MainContainer />
-//     </div>
-// }
-
-export default App;
