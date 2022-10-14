@@ -9,12 +9,12 @@ require('dotenv').config();
 /**
  * https://github.com/Riderize/passport-strava-oauth2/blob/master/example/app.js
  */
-passport.serializeUser(function (user, done) {
-  done(null, user);
-});
-passport.deserializeUser(function (obj, done) {
-  done(null, obj);
-});
+// passport.serializeUser(function (user, done) {
+//   done(null, user);
+// });
+// passport.deserializeUser(function (obj, done) {
+//   done(null, obj);
+// });
 passport.use(
   new StravaStrategy(
     {
@@ -44,13 +44,17 @@ authRouter.get(
 authRouter.get(
   '/callback',
   passport.authenticate('strava', {
-    failureMessage: 'failed to authenticate',
-    successMessage: 'successful authentication',
+    failureRedirect: '/loggedin',
+    successRedirect: '/loggedin',
   }),
   (req, res) => {
     return res.status(200).send(req);
   }
 );
+authRouter.get('/loggedin', (req, res) => {
+  // return res.status(200).send('logged in');
+  return res.redirect('/home');
+});
 // favoritesRouter.get(
 //   '/',
 //   favoritesController.getFavorites,

@@ -26,9 +26,9 @@ app.use((req, res, next) => {
 app.use('/auth/strava', authRouter);
 // app.use(bodyParser.urlencoded({extended: true}))
 
-// app.get('/', (req,res)=>{
-//     return res.status(200).sendFile(path.join(__dirname, '../index.html'))
-// })
+app.get('/home', (req, res) => {
+  return res.status(200).sendFile(path.join(__dirname, '../index.html'));
+});
 
 app.post('/signup', userController.createUser, (req, res) => {
   res.status(200).json(res.locals.user);

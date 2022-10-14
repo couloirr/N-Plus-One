@@ -7,8 +7,8 @@ import './css/app.css';
 export default function App() {
   return (
     <Routes>
-      <Route path="/" element={<MainContainer />} />
-      <Route path="/login" element={<LoginPage />} />
+      <Route path="/home" element={<MainContainer />} />
+      <Route path="/" element={<LoginPage />} />
     </Routes>
   );
 }
