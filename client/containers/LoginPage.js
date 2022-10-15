@@ -7,14 +7,7 @@ export const LoginPage = () => {
   async function handleSubmit(e) {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
-    const res = await fetch('auth/strava').then(() => navigate('/'));
-    navigate('/');
-    const parse = res.json();
-    console.log(parse);
-    // login({
-    //   email: data.get('email'),
-    //   password: data.get('password'),
-    // });
+    const res = await fetch('auth/strava');
   }
   return (
     <div className="loginWrapper">
