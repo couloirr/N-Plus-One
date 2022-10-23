@@ -1,13 +1,13 @@
-const express = require('express');
-const path = require('path');
-const mongoose = require('mongoose');
-const stravaController = require('./controllers/strava');
-const authRouter = require('./routes/authRoute');
-const cookieParser = require('cookie-parser');
-require('dotenv').config();
+import express from 'express';
+import passport from 'passport';
+import cookieParser from 'cookie-parser';
+import session from 'express-session';
+import path from 'path';
+import url from 'url';
 
-const MONGO_URI = 'mongodb://localhost/Users';
-mongoose.connect(MONGO_URI);
+const __filename = url.fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+// require('dotenv').config();
 
 const app = express();
 const port = 3000;
@@ -15,6 +15,19 @@ const port = 3000;
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
+app.use(
+  // cookieSession({
+  //   name: 'Strava-auth-session',
+  //   secret: process.env.SESSION_SECRET || '',
+  // })
+  session({
+    secret: process.env.SESSION_SECRET || '',
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/assets', express.static(path.join(__dirname, '../client/assets')));
 app.get('*', (req, res) => {
@@ -32,6 +45,8 @@ app.use((err, req, res, next) => {
   return res.status(errorObj.status).json(errorObj.message);
 });
 
-module.exports = app.listen(port, () =>
+app.listen(port, () =>
   console.log(`Listening on port ${port}`, process.env.STRAVA_CLIENT_ID)
 );
+
+export default app;

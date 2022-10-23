@@ -1,8 +1,8 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import MainContainer from './containers/MainContainer';
-import { LoginPage } from './containers/LoginPage';
-import { LandingPage } from './containers/LandingPage';
+import MainContainer from './containers/MainContainer.js';
+import { LoginPage } from './containers/LoginPage.js';
+import { LandingPage } from './containers/LandingPage.js';
 import './css/app.css';
 
 export default function App() {
