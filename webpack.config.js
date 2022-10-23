@@ -1,10 +1,7 @@
-import path from 'path';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import url from 'url';
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const __filename = url.fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-export default {
+module.exports = {
   entry: './client/index.js',
   devtool: 'inline-source-map',
   mode: process.env.NODE_ENV,

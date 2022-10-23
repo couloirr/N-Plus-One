@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 require('dotenv').config();
 mongoose
@@ -20,7 +20,7 @@ const componentSchema = new Schema({
   iconLink: String,
 });
 
-export const Component = mongoose.model('component', componentSchema);
+const Component = mongoose.model('component', componentSchema);
 
 const bikeSchema = new Schema({
   bikeName: String,
@@ -34,7 +34,7 @@ const bikeSchema = new Schema({
   recentRides: [{}],
 });
 
-export const Bike = mongoose.model('bike', bikeSchema);
+const Bike = mongoose.model('bike', bikeSchema);
 
 const userSchema = new Schema({
   email: { type: String, unique: true },
@@ -43,4 +43,10 @@ const userSchema = new Schema({
   bikes: [bikeSchema],
 });
 
-export const User = mongoose.model('user', userSchema);
+const User = mongoose.model('user', userSchema);
+
+module.exports = {
+  User,
+  Bike,
+  Component,
+};

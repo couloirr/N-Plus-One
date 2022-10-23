@@ -1,13 +1,11 @@
-import express from 'express';
-import passport from 'passport';
-import cookieParser from 'cookie-parser';
-import session from 'express-session';
-import path from 'path';
-import url from 'url';
+const express = require('express');
+const passport = require('passport');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const path = require('path');
+const authRouter = require('./routes/authRoute');
 
-const __filename = url.fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-// require('dotenv').config();
+require('dotenv').config();
 
 const app = express();
 const port = 3000;
@@ -49,4 +47,4 @@ app.listen(port, () =>
   console.log(`Listening on port ${port}`, process.env.STRAVA_CLIENT_ID)
 );
 
-export default app;
+module.exports = app;

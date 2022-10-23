@@ -1,5 +1,6 @@
-import express from 'express';
-import passport, { authController } from '../controllers/authController';
+const express = require('express');
+const authController = require('../controllers/authController');
+const passport = require('../models/passportConfig');
 
 // /**
 //  * https://github.com/Riderize/passport-strava-oauth2/blob/master/example/app.js
@@ -24,4 +25,4 @@ authRouter.get(
   authController.addUser
 );
 
-export default authRouter;
+module.exports = authRouter;
