@@ -37,8 +37,8 @@ const bikeSchema = new Schema({
 const Bike = mongoose.model('bike', bikeSchema);
 
 const userSchema = new Schema({
-  email: { type: String, unique: true },
-  password: String,
+  stravaId: Number,
+  name: String,
   lastSignIn: Date,
   bikes: [bikeSchema],
 });

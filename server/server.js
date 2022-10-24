@@ -4,7 +4,8 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const path = require('path');
 const authRouter = require('./routes/authRoute');
-
+// const UserDetails = require('./models/userDetails');
+const StravaStrategy = require('@riderize/passport-strava-oauth2').Strategy;
 require('dotenv').config();
 
 const app = express();
@@ -14,19 +15,17 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(
-  // cookieSession({
-  //   name: 'Strava-auth-session',
-  //   secret: process.env.SESSION_SECRET || '',
-  // })
   session({
-    secret: process.env.SESSION_SECRET || '',
+    secret: 'running a marathon',
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
   })
 );
+
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use('/auth', authRouter);
 app.use('/assets', express.static(path.join(__dirname, '../client/assets')));
 app.get('*', (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '../dist/index.html'));
@@ -44,7 +43,7 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(port, () =>
-  console.log(`Listening on port ${port}`, process.env.STRAVA_CLIENT_ID)
+  console.log(`Listening on port ${port}`, process.env.STRAVA_CLIENT_SECRET)
 );
 
 module.exports = app;
