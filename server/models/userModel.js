@@ -13,10 +13,7 @@ mongoose
   .catch((err) => console.log(err));
 const bikeDefault = {
   bikeName: 'Your Bike',
-  totalMiles: 0,
-  totalElevation: 0,
-  recentHours: 0,
-  totalHours: 0,
+  picLink: '../assets/bikepic.png',
 };
 const partsDefault = [
   { componentName: 'Fork', currentHours: 0, serviceInterval: 200 },
