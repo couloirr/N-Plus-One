@@ -23,10 +23,13 @@ authRouter.get(
   '/strava/callback',
   passport.authenticate('strava', { failureRedirect: '/error' }),
   authController.addUser,
-  stravaController.fetch,
   (req, res, next) => {
-    // console.log(req.session);
-    return res.redirect('http://localhost:8080/home');
+    // console.log(req.session);›
+    const id = encodeURIComponent(`${req.user.id}`);
+    const token = encodeURIComponent(`${req.user.token}`);
+    return res.redirect(
+      `http://localhost:8080/authenticate/?id=${id}&token=${token}`
+    );
     // res.status(200).send(res.locals.user);
   }
 );

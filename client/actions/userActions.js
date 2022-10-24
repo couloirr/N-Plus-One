@@ -7,12 +7,40 @@ import {
 } from '../constants/actionTypes.js';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
+// const [searchParams] = useSearchParams();
 
-export async function getUser(dispatch) {
-  const response = await axios.get('http://localhost:3000/api/signin');
-  // console.log(response.data.bikes[0].bikeComponents)
-  dispatch({ type: 'GET_USER', payload: response.data.bikes[0] });
+export function getStravaUser(stravaID, authToken) {
+  const id = stravaID;
+  const token = authToken;
+  return async function getUser(dispatch) {
+    // const id = searchParams.get('id');
+    // const token = searchParams.get('token');
+    console.log(id, token);
+    const response = await axios.get('http://localhost:3000/user', {
+      params: {
+        id: id,
+        token: token,
+      },
+    });
+    // console.log(response.data.bikes[0].bikeComponents)
+    console.log(response);
+    dispatch({ type: 'GET_USER', payload: response.data });
+  };
 }
+// export async function getUser(dispatch) {
+//   const id = searchParams.get('id');
+//   const token = searchParams.get('token');
+//   const response = await axios.get('http://localhost:3000/user', {
+//     params: {
+//       id: id,
+//       token: token,
+//     },
+//   });
+//   // console.log(response.data.bikes[0].bikeComponents)
+//   console.log(response);
+//   dispatch({ type: 'GET_USER', payload: response.data });
+// }
 export async function getStrava(dispatch) {
   console.log('in getStrava');
   const response = await axios.get('http://localhost:3000/api/strava');

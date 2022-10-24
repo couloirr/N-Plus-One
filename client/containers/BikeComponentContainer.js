@@ -3,7 +3,7 @@ import BikeComponent from '../components/BikeComponent.js';
 
 const BikeComponentContainer = ({ components }) => {
   const compArr = [];
-  // console.log(components)
+  console.log(components);
   if (components.length > 0) {
     components.forEach((element, i) => {
       compArr.push(<BikeComponent key={i} part={element} />);

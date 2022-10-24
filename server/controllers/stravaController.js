@@ -3,14 +3,31 @@ const models = require('../models/userModel');
 const stravaApi = require('strava-v3');
 
 const stravaController = {};
-
+//fetches rides since last login, adds them to recent ride on user and calculates new user totals
 stravaController.fetch = async (req, res, next) => {
   try {
-    const { stravaId, token } = req.session.passport.user;
+    const userDoc = res.locals.user;
+    const { id, token } = req.query;
+    console.log(id, 'in fetch');
     const strava = new stravaApi.client(token);
-    const userActivities = await strava.athlete.listActivities({});
+    const options = {};
+    if (userDoc.lastSignIn) {
+      options.before = userDoc.lastSignIn;
+    }
+    const userActivities = await strava.athlete.listActivities(options);
     const dataObj = dataReducer(userActivities);
-    console.log(dataObj);
+    userDoc.totalMiles += dataObj.totalMiles;
+    userDoc.totalHours += dataObj.movingTime;
+    userDoc.totalElevation += dataObj.elevationGain;
+    if (!userDoc.lastSignIn)
+      userDoc.recentRides.push(
+        ...userActivities.slice(userActivities.length - 6)
+      );
+    else userDoc.recentRides.push(...userActivities);
+    userDoc.lastSignIn = Date.now();
+    await userDoc.save();
+    const currentUser = await models.User.findOne({ stravaId: id });
+    res.locals.user = currentUser;
     return next();
   } catch (err) {
     next({
@@ -40,31 +57,4 @@ function dataReducer(data) {
   return totalsObj;
 }
 
-stravaController.addData = async (req, res, next) => {
-  const username = 'admin';
-  const currentUser = await models.User.findOne({ username: username });
-  const currentBike = currentUser.bikes[0];
-  console.log('found user');
-  const totals = res.locals.totals;
-  const data = res.locals.data;
-
-  const recentFive = data.slice(0, 6);
-  console.log('data sliced');
-  currentBike.totalHours = totals.movingTime;
-  currentBike.totalElevation = totals.elevationGain;
-  currentBike.totalMiles = totals.totalMiles;
-  currentBike.recentRides = recentFive;
-
-  const componentsArr = currentBike.bikeComponents;
-  componentsArr.forEach((element) => {
-    element.currentHours = totals.movingTime;
-  });
-
-  const updated = await currentUser.save();
-  console.log('data updated and saved');
-
-  res.locals.user = updated;
-
-  return next();
-};
 module.exports = stravaController;

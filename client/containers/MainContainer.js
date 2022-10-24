@@ -6,28 +6,22 @@ import RepairContainer from './RepairsContainer.js';
 import StatsContainer from './StatsContainer.js';
 
 const MainContainer = (props) => {
-  const {
-    bikeName,
-    bikeComponents,
-    totalMiles,
-    totalElevation,
-    recentRides,
-    totalHours,
-  } = useSelector((state) => state.user);
-  // console.log(bikeName)
+  const { recentRides, totalElevation, totalHours, totalMiles, name, bikes } =
+    useSelector((state) => state.user);
   return (
     <div id="mainContainer">
-      <RepairContainer bikeName={bikeName} components={bikeComponents} />
-      <StatsContainer
+      <h1>{totalElevation}</h1>
+      <h1>{totalHours}</h1>
+      <h1>{totalMiles}</h1>
+      <h1>{name}</h1>
+      {/* <RepairContainer bikeName={bikeName} components={bikeComponents} /> */}
+      {/* <StatsContainer
         totalMiles={totalMiles}
         totalElevation={totalElevation}
         totalHours={totalHours}
         recentRides={recentRides}
-      />
+      /> */}
     </div>
   );
 };
-const mapStateToProps = (state) => ({ user: state.user });
-
-// export default connect(mapStateToProps, {getUser})(MainContainer)
-export default connect(mapStateToProps, null)(MainContainer);
+export default MainContainer;
