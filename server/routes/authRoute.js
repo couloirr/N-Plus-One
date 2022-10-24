@@ -30,7 +30,8 @@ authRouter.get(
   authController.addUser,
   (req, res, next) => {
     console.log(req.session);
-    res.status(200).send(res.locals.user);
+    return res.redirect('http://localhost:8080/home');
+    // res.status(200).send(res.locals.user);
   }
 );
 
