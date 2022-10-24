@@ -1,13 +1,7 @@
 const express = require('express');
 const authController = require('../controllers/authController');
-// const passport = require('../models/passportConfig');
 const passport = require('passport');
-const StravaStrategy = require('@riderize/passport-strava-oauth2').Strategy;
 require('dotenv').config();
-// const UserDetails = require('../models/userDetails');
-// /**
-//  * https://github.com/Riderize/passport-strava-oauth2/blob/master/example/app.js
-//  */
 
 const authRouter = express.Router();
 

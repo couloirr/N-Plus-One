@@ -4,8 +4,6 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const path = require('path');
 const authRouter = require('./routes/authRoute');
-// const UserDetails = require('./models/userDetails');
-const StravaStrategy = require('@riderize/passport-strava-oauth2').Strategy;
 require('dotenv').config();
 
 const app = express();
