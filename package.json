@@ -39,6 +39,7 @@
     "redux": "^4.2.0",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.1",
+    "strava-v3": "^2.1.0",
     "use-local-storage": "^2.3.6"
   },
   "devDependencies": {

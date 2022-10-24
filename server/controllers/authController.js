@@ -17,7 +17,6 @@ passport.use(
       callbackURL: process.env.STRAVA_CALLBACK,
     },
     async function (accessToken, refreshToken, profile, done) {
-      console.log(profile);
       return done(null, profile);
     }
   )

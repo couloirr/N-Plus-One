@@ -1,5 +1,6 @@
 const express = require('express');
 const authController = require('../controllers/authController');
+const stravaController = require('../controllers/stravaController');
 const passport = require('passport');
 require('dotenv').config();
 
@@ -22,8 +23,9 @@ authRouter.get(
   '/strava/callback',
   passport.authenticate('strava', { failureRedirect: '/error' }),
   authController.addUser,
+  stravaController.fetch,
   (req, res, next) => {
-    console.log(req.session);
+    // console.log(req.session);
     return res.redirect('http://localhost:8080/home');
     // res.status(200).send(res.locals.user);
   }
