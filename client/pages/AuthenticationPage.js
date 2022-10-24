@@ -16,18 +16,6 @@ export const AuthenticationPage = () => {
     const id = searchParams.get('id');
     const token = searchParams.get('token');
     const getUserThunk = getStravaUser(id, token);
-    dispatch(getUserThunk);
+    dispatch(getUserThunk).then(() => navigate('/home'));
   }, []);
-
-  const handleClick = async (e) => {
-    e.preventDefault();
-    console.log(user);
-    navigate('/home');
-  };
-  return (
-    <div>
-      <h1>Successfully synced with Strava. Redirecting...</h1>
-      <button onClick={handleClick}>Click Me</button>
-    </div>
-  );
 };
