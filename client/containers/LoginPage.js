@@ -1,14 +1,13 @@
 import React from 'react';
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../hooks/useAuth.js';
+import { useNavigate } from 'react-router-dom';
 export const LoginPage = () => {
-  const { login } = useAuth();
-  function handleSubmit(e) {
+  const navigate = useNavigate();
+  // const { login } = useAuth();
+  async function handleSubmit(e) {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
-    // login({
-    //   email: data.get('email'),
-    //   password: data.get('password'),
-    // });
+    const res = await fetch('auth/strava');
   }
   return (
     <div className="loginWrapper">
@@ -17,6 +16,9 @@ export const LoginPage = () => {
         <input type="text" name="username" placeholder="Password"></input>
         <button type="submit">Login</button>
         <button>Signup</button>
+      </form>
+      <form action="http://localhost:3000/auth/strava" method="get">
+        <input type="submit" value="Login Auth"></input>
       </form>
     </div>
   );

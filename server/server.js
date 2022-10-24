@@ -1,90 +1,33 @@
 const express = require('express');
-const app = express();
+const passport = require('passport');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
 const path = require('path');
+const authRouter = require('./routes/authRoute');
+require('dotenv').config();
+
+const app = express();
 const port = 3000;
-const mongoose = require('mongoose');
-const userController = require('./controllers/userController');
-const bodyParser = require('body-parser');
-const stravaController = require('./controllers/strava');
-
-// const MONGO_URI =   'mongodb+srv://acseery:XbVDf89kiMilgn1b@cluster0.emg5bja.mongodb.net/?retryWrites=true&w=majority';
-const MONGO_URI = 'mongodb://localhost/Users';
-
-mongoose.connect(MONGO_URI);
 
 app.use(express.json());
-// app.use(express.urlencoded())
-app.use('/build', express.static(path.join(__dirname, '../build')));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  next();
-});
-// app.use(bodyParser.urlencoded({extended: true}))
-
-// app.get('/', (req,res)=>{
-//     return res.status(200).sendFile(path.join(__dirname, '../index.html'))
-// })
-
-app.post('/signup', userController.createUser, (req, res) => {
-  res.status(200).json(res.locals.user);
-});
-app.get('/signup', (req, res) => {
-  res.send('getting signup');
-});
-
-app.post(
-  '/newbike',
-  userController.verifyUser,
-  userController.createBike,
-  userController.createComponent,
-  (req, res) => {
-    res.status(200).json(res.locals.user);
-  }
+app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
+app.use(
+  session({
+    secret: 'running a marathon',
+    resave: false,
+    saveUninitialized: true,
+  })
 );
-app.get('/newbike', (req, res) => {
-  res.send('getting signup');
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use('/auth', authRouter);
+app.use('/assets', express.static(path.join(__dirname, '../client/assets')));
+app.get('*', (req, res) => {
+  return res.status(200).sendFile(path.join(__dirname, '../dist/index.html'));
 });
-
-app.get('/api/signin', userController.getUser, (req, res) => {
-  res.status(200).json(res.locals.user);
-});
-// app.post(
-//   '/api/newRide',
-//   userController.verifyUser,
-//   userController.newRide,
-//   (req, res) => {
-//     res.status(200).json(res.locals.user);
-//   }
-// );
-// app.post(
-//   '/api/newrepair',
-//   userController.verifyUser,
-//   userController.updateComponent,
-//   (req, res) => {
-//     res.status(200).json(res.locals.user);
-//   }
-// );
-
-// app.get('/api', (req, res) => {
-//   res.send('getting api');
-// });
-
-// app.get(
-//   '/api/strava',
-//   stravaController.fetch,
-//   stravaController.parseData,
-//   stravaController.addData,
-//   (req, res) => {
-//     res.status(200).json(res.locals.user);
-//   }
-// );
-
-app.use('*', (req, res) => {
-  return res.status(404).send('Not Found');
-});
-
 app.use((err, req, res, next) => {
   const defaultErr = {
     log: 'Express error handler caught unknown middleware error',
@@ -97,6 +40,8 @@ app.use((err, req, res, next) => {
   return res.status(errorObj.status).json(errorObj.message);
 });
 
-module.exports = app.listen(port, () =>
-  console.log(`Listening on port ${port}`)
+app.listen(port, () =>
+  console.log(`Listening on port ${port}`, process.env.STRAVA_CLIENT_SECRET)
 );
+
+module.exports = app;
