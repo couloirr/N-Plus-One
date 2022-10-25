@@ -11,7 +11,7 @@ const AllBikesView = (props) => {
   bikes.forEach((bike, i) => {
     bikeArr.push(
       <Bike
-        position={i}
+        position={bike}
         bikeName={bike.bikeName}
         picLink={bike.picLink}
         dbId={bike._id}
@@ -53,7 +53,7 @@ const Bike = ({ position, bikeName, picLink, dbId }) => {
   const navigate = useNavigate();
   function handleClick(e, position) {
     e.preventDefault();
-    navigate('/home', { bikePosition: position });
+    navigate('/bikeView', { state: { bikeObj: position } });
   }
   return (
     <div className="bikeCard" id={dbId}>

@@ -3,8 +3,13 @@ import { useDispatch } from 'react-redux';
 import { newRepair } from '../actions/userActions.js';
 // import { useState } from "react";
 
-const BikeComponent = (props) => {
-  const { componentName, currentHours, serviceInterval, _id } = props.part;
+const BikeComponent = ({
+  componentName,
+  currentHours,
+  serviceInterval,
+  _id,
+}) => {
+  // const { componentName, currentHours, serviceInterval, _id } = props.part;
   const dispatch = useDispatch();
 
   const onSubmit = (e) => {

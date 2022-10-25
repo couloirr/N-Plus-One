@@ -4,6 +4,7 @@ import AllBikesView from './pages/AllBikeView.js';
 import { LoginPage } from './containers/LoginPage.js';
 import { LandingPage } from './containers/LandingPage.js';
 import { AuthenticationPage } from './pages/AuthenticationPage.js';
+import BikeView from './pages/BikeView.js';
 import './css/app.css';
 
 export default function App() {
@@ -13,6 +14,7 @@ export default function App() {
       <Route path="/home" element={<AllBikesView />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/authenticate" element={<AuthenticationPage />} />
+      <Route path="/bikeView" element={<BikeView />} />
     </Routes>
   );
 }
