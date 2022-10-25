@@ -10,9 +10,19 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { userUpdate } from '../actions/userActions';
 
-export default function FormDialog({ bikeName, bikeId, userId, type }) {
+export default function AddEditPart({
+  componentName,
+  currentHours,
+  serviceInterval,
+  partId,
+  userId,
+  bikeId,
+  type,
+}) {
   const dispatch = useDispatch();
-  const [itemName, setItemName] = useState(bikeName);
+  const [componentNameState, setComponentName] = useState(componentName);
+  const [currentHoursState, setCurrentHours] = useState(currentHours);
+  const [serviceIntervalState, setServiceInterval] = useState(serviceInterval);
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -23,48 +33,76 @@ export default function FormDialog({ bikeName, bikeId, userId, type }) {
     setOpen(false);
   };
   const handleSubmit = () => {
-    console.log(itemName);
-
     const updateObj = {
       bikeId: bikeId,
-      update: { bikeName: itemName },
+      update: {
+        componentName: componentNameState,
+        currentHours: currentHoursState,
+        serviceInterval: serviceIntervalState,
+      },
       userId: userId,
-      type: 'editBike',
+      type: 'editPart',
+      partId: partId,
     };
-    if (type === 'add') {
-      updateObj.objectId = null;
-      updateObj.type = 'addBike';
+    if (type !== 'edit') {
+      updateObj.partId = null;
+      updateObj.type = 'addPart';
     }
-    console.log(updateObj);
     const getUserThunk = userUpdate(updateObj);
     dispatch(getUserThunk);
     setOpen(false);
   };
   return (
     <div>
-      {type === 'add' ? (
+      {type === 'edit' ? (
         <Button variant="outlined" onClick={handleClickOpen}>
-          Add Bike
+          Edit Part
         </Button>
       ) : (
         <Button variant="outlined" onClick={handleClickOpen}>
-          Edit Bike
+          Add Part
         </Button>
       )}
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>
-          {type === 'add' ? 'Name Your Bike ' : 'Edit Your Bike Name'}
+          {type === 'edit' ? 'Edit Your Part ' : 'Add A Part'}
         </DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
             margin="dense"
-            id="name"
-            label="Bike Name"
+            id="partName"
+            label="Part Name"
             type="text"
-            value={itemName}
+            value={componentNameState}
             onChange={(e) => {
-              setItemName(e.target.value);
+              setComponentName(e.target.value);
+            }}
+            fullWidth
+            variant="standard"
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Current Hours"
+            type="number"
+            value={currentHoursState}
+            onChange={(e) => {
+              setCurrentHours(e.target.value);
+            }}
+            fullWidth
+            variant="standard"
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="serviceInterval"
+            label="Service Interval"
+            type="number"
+            value={serviceIntervalState}
+            onChange={(e) => {
+              setServiceInterval(e.target.value);
             }}
             fullWidth
             variant="standard"

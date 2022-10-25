@@ -19,6 +19,9 @@
   },
   "homepage": "https://github.com/couloirr/Solo-Project#readme",
   "dependencies": {
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
+    "@mui/material": "^5.10.10",
     "@riderize/passport-strava-oauth2": "^2.0.0",
     "axios": "^0.27.2",
     "body-parser": "^1.20.0",

@@ -34,7 +34,7 @@ const Component = mongoose.model('component', componentSchema);
 
 const bikeSchema = new Schema({
   bikeName: String,
-  picLink: String,
+  // picLink: String,
   bikeComponents: { type: [componentSchema], default: partsDefault },
 });
 

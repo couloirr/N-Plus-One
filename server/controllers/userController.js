@@ -10,6 +10,39 @@ userController.getUser = async (req, res, next) => {
   return next();
 };
 
+userController.updateUser = async (req, res, next) => {
+  // console.log(req.body, 'from update user');
+  const { bikeId, update, userId, type, partId } = req.body;
+  console.log(update, type);
+  const currentUser = await models.User.findById(userId);
+  if (type === 'addBike') {
+    const newBike = {
+      bikeName: update.bikeName,
+    };
+    currentUser.bikes.push(newBike);
+  }
+  if (type === 'editBike') {
+    const currentBike = await currentUser.bikes.id(bikeId);
+    currentBike.bikeName = update.bikeName;
+  }
+  if (type === 'deleteBike') {
+    await currentUser.bikes.id(bikeId).remove();
+  }
+  if (type === 'editPart') {
+    const currentBike = await currentUser.bikes.id(bikeId);
+    const currentComponent = await currentBike.bikeComponents.id(partId);
+    currentComponent.componentName = update.componentName;
+    currentComponent.serviceInterval = update.serviceInterval;
+    currentComponent.currentHours = update.currentHours;
+  }
+  await currentUser.save();
+  const updatedUser = await models.User.findById(userId);
+  // console.log(updatedUser);
+  res.locals.user = updatedUser;
+  return next();
+  // const currentDoc = await models.User.findOne({ 'user.bikes._id': objectId });
+  // console.log(currentUser);
+};
 // userController.createUser = (req, res, next) => {
 //   const id = 3,
 //     username = 'admin',
