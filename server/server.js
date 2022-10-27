@@ -4,6 +4,8 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const path = require('path');
 const authRouter = require('./routes/authRoute');
+const userRouter = require('./routes/userRoute');
+const flash = require('connect-flash');
 require('dotenv').config();
 
 const app = express();
@@ -11,6 +13,10 @@ const port = 3000;
 
 app.use(express.json());
 app.use(cookieParser());
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
 app.use(express.urlencoded({ extended: true }));
 app.use(
   session({
@@ -24,6 +30,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/auth', authRouter);
+app.use('/user', userRouter);
 app.use('/assets', express.static(path.join(__dirname, '../client/assets')));
 app.get('*', (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '../dist/index.html'));

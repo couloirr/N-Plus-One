@@ -1,17 +1,29 @@
 import React, { Component } from 'react';
 import { useDispatch } from 'react-redux';
-import { newRepair } from '../actions/userActions.js';
-// import { useState } from "react";
+import { userUpdate } from '../actions/userActions.js';
+import AddEditPart from './AddEditPart.js';
 
-const BikeComponent = (props) => {
-  const { componentName, currentHours, serviceInterval, _id } = props.part;
+const BikeComponent = ({
+  componentName,
+  currentHours,
+  serviceInterval,
+  partId,
+  bikeId,
+  userId,
+}) => {
+  const [partName, setPartName] = React.useState(componentName);
   const dispatch = useDispatch();
 
   const onSubmit = (e) => {
     e.preventDefault();
-    const partId = e.target.edit.id;
-    const newRepairThunk = newRepair(partId);
-    dispatch(newRepairThunk);
+    const updateObj = {
+      bikeId: bikeId,
+      userId: userId,
+      type: 'addService',
+      partId: partId,
+    };
+    const getUserThunk = userUpdate(updateObj);
+    dispatch(getUserThunk);
   };
   const percentage = (currentHours, serviceInterval) => {
     let percent = ((serviceInterval - currentHours) / serviceInterval) * 100;
@@ -28,9 +40,18 @@ const BikeComponent = (props) => {
         serviceInterval - currentHours > 0 ? serviceInterval - currentHours : 0
       }`}</h4>
       <form onSubmit={onSubmit}>
-        <button id={_id} name="edit" type="submit" className="repair_button">
-          Complete Repair
+        <button name="edit" type="submit" className="repair_button">
+          Add Service
         </button>
+        <AddEditPart
+          type={'edit'}
+          currentHours={currentHours}
+          componentName={partName}
+          serviceInterval={serviceInterval}
+          userId={userId}
+          partId={partId}
+          bikeId={bikeId}
+        />
       </form>
     </div>
   );

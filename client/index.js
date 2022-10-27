@@ -5,8 +5,6 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App.js';
 import { Provider } from 'react-redux';
 import store from './store.js';
-import { getUser } from './actions/userActions.js';
-// store.dispatch(getUser);
 
 const rootElement = document.getElementById('root');
 const root = createRoot(rootElement);

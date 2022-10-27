@@ -11,7 +11,17 @@ mongoose
   })
   .then(() => console.log('Connected to Mongo DB.'))
   .catch((err) => console.log(err));
-
+const bikeDefault = {
+  bikeName: 'Your Bike',
+  picLink: '../assets/bikepic.png',
+};
+const partsDefault = [
+  { componentName: 'Fork', currentHours: 0, serviceInterval: 200 },
+  { componentName: 'Rear Shock', currentHours: 0, serviceInterval: 100 },
+  { componentName: 'Drive Train', currentHours: 0, serviceInterval: 500 },
+  { componentName: 'Brakes', currentHours: 0, serviceInterval: 400 },
+];
+const currentDate = Date.now();
 const componentSchema = new Schema({
   componentName: String,
   currentHours: Number,
@@ -24,14 +34,8 @@ const Component = mongoose.model('component', componentSchema);
 
 const bikeSchema = new Schema({
   bikeName: String,
-  id: { type: Number, unique: true },
-  picLink: String,
-  totalMiles: Number,
-  totalElevation: Number,
-  recentHours: Number,
-  totalHours: Number,
-  bikeComponents: [componentSchema],
-  recentRides: [{}],
+  // picLink: String,
+  bikeComponents: { type: [componentSchema], default: partsDefault },
 });
 
 const Bike = mongoose.model('bike', bikeSchema);
@@ -40,7 +44,12 @@ const userSchema = new Schema({
   stravaId: Number,
   name: String,
   lastSignIn: Date,
-  bikes: [bikeSchema],
+  bikes: { type: [bikeSchema], default: bikeDefault },
+  totalMiles: { type: Number, default: 0 },
+  totalElevation: { type: Number, default: 0 },
+  totalHours: { type: Number, default: 0 },
+  recentRides: [],
+  assignedRide: [],
 });
 
 const User = mongoose.model('user', userSchema);

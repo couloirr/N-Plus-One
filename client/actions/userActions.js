@@ -7,12 +7,38 @@ import {
 } from '../constants/actionTypes.js';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
+// const [searchParams] = useSearchParams();
 
-export async function getUser(dispatch) {
-  const response = await axios.get('http://localhost:3000/api/signin');
-  // console.log(response.data.bikes[0].bikeComponents)
-  dispatch({ type: 'GET_USER', payload: response.data.bikes[0] });
+export function getStravaUser(stravaID, authToken) {
+  const id = stravaID;
+  const token = authToken;
+  return async function getUser(dispatch) {
+    const response = await axios.get('http://localhost:3000/user', {
+      params: {
+        id: id,
+        token: token,
+      },
+    });
+    // console.log(response.data.bikes[0].bikeComponents)
+    console.log(response);
+    dispatch({ type: 'GET_USER', payload: response.data });
+  };
 }
+export function getDbUser(db) {
+  console.log(db, 'in thunk');
+  return async function getUser(dispatch) {
+    const response = await axios.get('http://localhost:3000/user/db', {
+      params: {
+        id: db,
+      },
+    });
+    // console.log(response.data.bikes[0].bikeComponents)
+    console.log(response);
+    dispatch({ type: 'GET_USER', payload: response.data });
+  };
+}
+
 export async function getStrava(dispatch) {
   console.log('in getStrava');
   const response = await axios.get('http://localhost:3000/api/strava');
@@ -37,16 +63,25 @@ export function saveNewRide(miles, hours, elevation, currentBike) {
     dispatch({ type: 'NEW_RIDE', payload: response.data.bikes[0] });
   };
 }
-
-export function newRepair(id) {
-  const partId = { id: id };
-  const jsonPart = JSON.stringify(partId);
-
+//expect
+export function userUpdate(updateObj) {
   return async function saveNewRepairThunk(dispatch, getState) {
-    const response = await axios.post(
-      'http://localhost:3000/api/newrepair',
-      id
-    );
-    dispatch({ type: 'NEW_REPAIR', payload: response.data.bikes[0] });
+    const jsonReq = JSON.stringify(updateObj);
+    const config = {
+      headers: { 'Content-Type': 'application/json' },
+    };
+    const response = await axios.post('/user/update', updateObj, config);
+    // const response = fetch('/api/parents/signup', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: {
+    //     studentId: e.studentId,
+    //     emaiL: e.email,
+    //     password: e.password,
+    //   },
+    // });
+    dispatch({ type: 'NEW_REPAIR', payload: response.data });
   };
 }

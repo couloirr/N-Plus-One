@@ -17,7 +17,6 @@ passport.use(
       callbackURL: process.env.STRAVA_CALLBACK,
     },
     async function (accessToken, refreshToken, profile, done) {
-      console.log(profile);
       return done(null, profile);
     }
   )
@@ -32,10 +31,11 @@ authController.addUser = async (req, res, next) => {
   const name = req.user.fullName;
   try {
     const query = { stravaId: userId };
-    const update = { stravaID: userId, name: name, lastSignIn: Date.now() };
+    const update = { stravaID: userId, name: name };
     const options = { upsert: true, new: true, setDefaultsonInsert: true };
     const newUser = await model.User.findOneAndUpdate(query, update, options);
     res.locals.user = newUser;
+    res.cookie('stid', userId);
     return next();
   } catch (err) {
     return next({
