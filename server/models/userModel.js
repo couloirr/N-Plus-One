@@ -49,6 +49,7 @@ const userSchema = new Schema({
   totalElevation: { type: Number, default: 0 },
   totalHours: { type: Number, default: 0 },
   recentRides: [],
+  assignedRide: [],
 });
 
 const User = mongoose.model('user', userSchema);

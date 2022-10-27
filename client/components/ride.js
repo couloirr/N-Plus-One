@@ -1,18 +1,40 @@
 import React from 'react';
-
-const Ride = ({ rideName, rideDistance, rideTime, rideElevation, bikes }) => {
+import { useDispatch } from 'react-redux';
+import { userUpdate } from '../actions/userActions';
+const Ride = ({
+  rideName,
+  rideDistance,
+  rideTime,
+  rideElevation,
+  bikes,
+  userId,
+}) => {
+  const dispatch = useDispatch();
   const metersConvert = (num) => Math.round((num / 1609) * 10) / 10;
-  const timeConvert = (num) => Math.round(num * 10) / 10;
-  const elevationConvert = (num) => Math.round(num * 10) / 10;
+  const timeConvert = (num) => Math.round((num / 3600) * 10) / 10;
+  const elevationConvert = (num) => Math.round(num * 3.281);
   const selectorArr = [];
   bikes.forEach((element) => {
-    selectorArr.push(<option id={element.bikeId}>{element.bikeName}</option>);
+    selectorArr.push(<option id={element._id}>{element.bikeName}</option>);
   });
 
   function handleChange(e) {
     e.preventDefault();
-    const bikeId = e.target.value;
-    console.log(e.target.value);
+    const index = e.target.selectedIndex;
+    const el = e.target.childNodes[index];
+    const option = el.getAttribute('id');
+    const updateObj = {
+      bikeId: option,
+      userId: userId,
+      type: 'assignRide',
+      update: {
+        rideDistance: rideDistance,
+        rideTime: rideTime,
+        rideElevation: rideElevation,
+      },
+    };
+    const getUserThunk = userUpdate(updateObj);
+    dispatch(getUserThunk);
   }
   return (
     <div className="component">

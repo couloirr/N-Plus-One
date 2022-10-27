@@ -1,12 +1,22 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { getDbUser } from '../actions/userActions';
 
 export const LandingPage = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    console.log('in use effect');
+    const db = '635811047341a1bf7561c3c0';
+    const getUserThunk = getDbUser(db);
+    dispatch(getUserThunk);
+  }, []);
   const navigate = useNavigate();
   // const { login } = useAuth();
   async function handleClick(e) {
     e.preventDefault();
-    navigate('/login');
+    navigate('/home');
   }
   return (
     <div className="landingWrapper">

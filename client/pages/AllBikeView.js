@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { getUser } from '../actions/userActions';
 import { Form, useNavigate } from 'react-router-dom';
@@ -6,9 +6,15 @@ import Ride from '../components/ride';
 import AddRide from '../components/AddRide';
 import FormDialog from '../components/EditBikeModal';
 import { useDispatch } from 'react-redux';
-import { userUpdate } from '../actions/userActions';
+import { userUpdate, getDbUser } from '../actions/userActions';
 import PartView from './PartView';
 const AllBikesView = (props) => {
+  // useEffect(() => {
+  //   console.log('in use effect');
+  //   const db = '635811047341a1bf7561c3c0';
+  //   const getUserThunk = getDbUser(db);
+  //   dispatch(getUserThunk);
+  // }, []);
   const {
     recentRides,
     totalElevation,
@@ -41,6 +47,7 @@ const AllBikesView = (props) => {
         rideTime={ride.moving_time}
         rideElevation={ride.total_elevation_gain}
         bikes={bikes}
+        userId={_id}
       />
     );
   });
@@ -58,7 +65,7 @@ const AllBikesView = (props) => {
         <h1>Recent Rides</h1>
         {rideArr}
       </div>
-      <AddRide />
+      <AddRide userId={_id} />
     </div>
   );
 };
@@ -70,7 +77,6 @@ const Bike = ({ position, bikeName, picLink, bikeId, userId, components }) => {
   function handleClick(e) {
     e.preventDefault();
     setPartView(!partView);
-    // navigate('/bikeView', { state: { bikeObj: position, userId: userId } });
   }
   function handleDelete(e) {
     e.preventDefault();

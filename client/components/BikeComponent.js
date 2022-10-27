@@ -16,9 +16,14 @@ const BikeComponent = ({
 
   const onSubmit = (e) => {
     e.preventDefault();
-    // const partId = e.target.edit.id;
-    // const newRepairThunk = newRepair(partId);
-    // dispatch(newRepairThunk);
+    const updateObj = {
+      bikeId: bikeId,
+      userId: userId,
+      type: 'addService',
+      partId: partId,
+    };
+    const getUserThunk = userUpdate(updateObj);
+    dispatch(getUserThunk);
   };
   const percentage = (currentHours, serviceInterval) => {
     let percent = ((serviceInterval - currentHours) / serviceInterval) * 100;

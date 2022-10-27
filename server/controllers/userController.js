@@ -9,6 +9,12 @@ userController.getUser = async (req, res, next) => {
   res.locals.user = currentUser;
   return next();
 };
+userController.getDbUser = async (req, res, next) => {
+  const { id, token } = req.query;
+  const currentUser = await models.User.findById(id);
+  res.locals.user = currentUser;
+  return next();
+};
 
 userController.updateUser = async (req, res, next) => {
   // console.log(req.body, 'from update user');
@@ -34,6 +40,26 @@ userController.updateUser = async (req, res, next) => {
     currentComponent.componentName = update.componentName;
     currentComponent.serviceInterval = update.serviceInterval;
     currentComponent.currentHours = update.currentHours;
+  }
+  if (type === 'addService') {
+    const currentBike = await currentUser.bikes.id(bikeId);
+    const currentComponent = await currentBike.bikeComponents.id(partId);
+    currentComponent.currentHours = 0;
+  }
+  if (type === 'addRide') {
+    currentUser.recentRides.push(update);
+    currentUser.totalHours += update.moving_time;
+    currentUser.totalMiles += update.distance;
+    currentUser.totalElevation += update.total_elevation_gain;
+    console.log(update);
+  }
+  if (type === 'assignRide') {
+    const timeConvert = (num) => Math.round((num / 3600) * 10) / 10;
+    const currentBike = await currentUser.bikes.id(bikeId);
+    const compArr = currentBike.bikeComponents;
+    compArr.forEach((part) => {
+      part.currentHours += timeConvert(update.rideTime);
+    });
   }
   await currentUser.save();
   const updatedUser = await models.User.findById(userId);

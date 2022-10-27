@@ -35,7 +35,6 @@ export default function FormDialog({ bikeName, bikeId, userId, type }) {
       updateObj.objectId = null;
       updateObj.type = 'addBike';
     }
-    console.log(updateObj);
     const getUserThunk = userUpdate(updateObj);
     dispatch(getUserThunk);
     setOpen(false);

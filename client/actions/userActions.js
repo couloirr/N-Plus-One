@@ -14,11 +14,23 @@ export function getStravaUser(stravaID, authToken) {
   const id = stravaID;
   const token = authToken;
   return async function getUser(dispatch) {
-    console.log(id, token);
     const response = await axios.get('http://localhost:3000/user', {
       params: {
         id: id,
         token: token,
+      },
+    });
+    // console.log(response.data.bikes[0].bikeComponents)
+    console.log(response);
+    dispatch({ type: 'GET_USER', payload: response.data });
+  };
+}
+export function getDbUser(db) {
+  console.log(db, 'in thunk');
+  return async function getUser(dispatch) {
+    const response = await axios.get('http://localhost:3000/user/db', {
+      params: {
+        id: db,
       },
     });
     // console.log(response.data.bikes[0].bikeComponents)
