@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { useLocation } from 'react-router-dom';
 import BikeComponent from '../components/BikeComponent';
 import AddEditPart from '../components/AddEditPart';
+import { List, ListItem, Grid } from '@mui/material';
 const PartView = ({ bikeId, components, userId }) => {
   const compArr = [];
   components.forEach((component) => {
@@ -17,8 +18,9 @@ const PartView = ({ bikeId, components, userId }) => {
     );
   });
   return (
-    <div id="bikesDisplay">
-      <div className="componentDisplay">{compArr}</div>
+    <div id="partsDisplay">
+      <List>{compArr}</List>
+
       <AddEditPart
         type={'add'}
         currentHours={0}
