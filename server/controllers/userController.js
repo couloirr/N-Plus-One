@@ -1,5 +1,5 @@
 const models = require('../models/userModel');
-
+const fs = require('fs');
 const userController = {};
 
 userController.getUser = async (req, res, next) => {
@@ -13,6 +13,7 @@ userController.getDbUser = async (req, res, next) => {
   const { id, token } = req.query;
   const currentUser = await models.User.findById(id);
   res.locals.user = currentUser;
+  fs.writeFileSync('data.json', JSON.stringify(currentUser));
   return next();
 };
 

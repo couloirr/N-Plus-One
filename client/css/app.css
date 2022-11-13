@@ -5,4 +5,16 @@
 #bikesDisplay {
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
+}
+
+#totalsDisplay {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#bikeCard {
+  gap: 50px;
+  /* height: 500px; */
+  width: 700px;
 }

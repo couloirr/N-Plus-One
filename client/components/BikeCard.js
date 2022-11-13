@@ -9,6 +9,8 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
 import PartView from '../pages/PartView';
+import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike';
+import src from '../assets/pngwing.com.png';
 const Bike = ({ position, bikeName, picLink, bikeId, userId, components }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -44,12 +46,12 @@ const Bike = ({ position, bikeName, picLink, bikeId, userId, components }) => {
     //   </div>
     //   <div className="partContainer"></div>
     // </div>
-    <Card>
+    <Card id="bikeCard">
       <CardActionArea>
         <CardMedia
           component="img"
-          height="140"
-          image={picLink}
+          height="400"
+          image={src}
           alt="bike picture"
           onClick={handleClick}
         />

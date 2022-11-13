@@ -5,18 +5,30 @@ import { useDispatch } from 'react-redux';
 import { getDbUser } from '../actions/userActions';
 
 export const LandingPage = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  useEffect(() => {
+  // useEffect(() => {
+  //   console.log('in use effect');
+  //   const db = '635811047341a1bf7561c3c0';
+  //   const getUserThunk = getDbUser(db);
+  //   dispatch(getUserThunk);
+  // }, []);
+  async function login() {
     console.log('in use effect');
     const db = '635811047341a1bf7561c3c0';
     const getUserThunk = getDbUser(db);
     dispatch(getUserThunk);
+  }
+
+  useEffect(() => {
+    login();
+    setTimeout(() => navigate('/home'), 1000);
   }, []);
-  const navigate = useNavigate();
+
   // const { login } = useAuth();
   async function handleClick(e) {
-    e.preventDefault();
-    navigate('/home');
+    // e.preventDefault();
+    // navigate('/home');
   }
   return (
     <div className="landingWrapper">
